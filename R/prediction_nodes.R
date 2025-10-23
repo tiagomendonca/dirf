@@ -1,0 +1,93 @@
+#' prediction_nodes
+#'
+#' @description
+#' Generates predictions using a node-based approach. The distances between nodes are normalized
+#' by dividing them by the maximum distance, resulting in values ranging from 0 to 1. The function
+#' applies a weighting scheme to calculate the final prediction, considering the proximity of nodes
+#' in the Random Forest structure.
+#'
+#' @param node A numeric vector of terminal nodes from observations to predict, one value per tree.
+#' @param nodes_base A `data.table` containing the terminal nodes of the training dataset for each tree in the Random Forest.
+#' Must include the columns:
+#' - `obs`: Observation index from the training dataset.
+#' - `tree`: Tree index.
+#' - `node1`: Terminal node for the observation in the respective tree.
+#' @param y A numeric vector of responses from the training dataset, corresponding to the observations in `nodes_base`.
+#' @param nodes_dist A `data.table` containing distances between terminal nodes, typically generated using the `distances` function.
+#' Must include the columns:
+#' - `node1`: First node in the pair.
+#' - `node2`: Second node in the pair.
+#' - `dist`: Distance between the two nodes.
+#' @param h A numeric value for the weighting parameter, controlling the influence of distances on the prediction. Default is `0.01`.
+#'
+#' @return A numeric value representing the predicted response for the given observation.
+#'
+#' @export
+#'
+#' @examples
+#' # Generate example data
+#' set.seed(123)
+#' df1 <- tibble::tibble(
+#'   x1 = runif(20, 0, 1),
+#'   x2 = rnorm(20, 0, 1),
+#'   y = 2 * x1 + 1.5 * x2 + rnorm(20, 0, 1)
+#' )
+#'
+#' df2 <- tibble::tibble(
+#'   x1 = runif(20, 0, 1),
+#'   x2 = rnorm(20, 0, 1),
+#'   y = 2 * x1 + 1.5 * x2 + rnorm(20, 0, 1)
+#' )
+#'
+#' # Train a Random Forest model
+#' rf <- ranger::ranger(
+#'   y ~ .,
+#'   data = df1,
+#'   max.depth = 5,
+#'   num.trees = 10,
+#'   write.forest = TRUE
+#' )
+#'
+#' # Get terminal nodes for training and new data
+#' preditos1 <- predict(rf, df1, type = 'terminalNodes')$predictions
+#' preditos2 <- predict(rf, df2, type = 'terminalNodes')$predictions
+#'
+#' # Compute distances between nodes
+#' nodes_distances_rf <- distances(rf)
+#'
+#' # Prepare base data for prediction
+#' base_prediction <- data.table::data.table(
+#'   obs = rep(1:nrow(preditos1), each = rf$num.trees),
+#'   tree = rep(1:rf$num.trees, nrow(df1)),
+#'   node1 = as.vector(t(preditos1))
+#' )
+#'
+#' # Generate prediction for the first observation in df2
+#' prediction <- prediction_nodes(
+#'   node = preditos2[1, ],
+#'   nodes_base = base_prediction,
+#'   y = df1$y,
+#'   nodes_dist = nodes_distances_rf,
+#'   h = 0.1
+#' )
+#' print(prediction)
+#'
+prediction_nodes <- function(node, nodes_base, y, nodes_dist, h = 0.01) {
+  n1 <- nodes_base$node1
+  n2 <- rep(node, dim(nodes_base)[1] / length(node))
+
+  nodes_base$node1 <- pmin(n1, n2)
+  nodes_base$node2 <- pmax(n1, n2)
+
+  nodes_dist[, dist := dist / max(dist)]
+
+  aux <- merge(nodes_base, nodes_dist, all.x = TRUE)
+
+  pesos <- aux[, .(dist = mean(dist)), by = .(obs)][order(obs)]$dist
+
+  return(sum(exp(-(pesos / h) ^ 2) * y) / sum(exp(-(pesos / h) ^ 2)))
+
+}
+
+
+.datatable.aware <- TRUE

@@ -1,0 +1,33 @@
+Package: dirf
+Title: Distances with Random Forest
+Version: 0.0.0.9000
+Authors@R:
+    c(
+    person("Tiago", "Mendonça", email = "tiago.mendonca.s@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-4223-9162")),
+    person("Rafael", "Izbicki", email = "rizbicki@gmail.com", role = c("aut"))
+    )
+Description: Predictions for mean and quantiles based on DiNo (Distance with Nodes) and RanBu (Random Bushes) methods.
+License: GPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Imports: 
+    ape,
+    data.table,
+    dplyr,
+    magrittr,
+    purrr,
+    ranger,
+    Rcpp,
+    RcppAlgos,
+    RcppArmadillo,
+    stats,
+    stringr,
+    tibble,
+    tidyr
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+LinkingTo: 
+    Rcpp,
+    RcppArmadillo
