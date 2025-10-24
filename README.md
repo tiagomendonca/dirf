@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# dirf - Distances with Random Forest <a href="https://https://github.com/tiagomendonca/dirf"><img src="man/figures/hex-dirf01.png" align="right" height="175" /></a>
+# dirf - Distances with Random Forest <a href="https://github.com/tiagomendonca/dirf"><img src="man/figures/hex-dirf01.png" align="right" height="175" /></a>
 
 <!-- badges: start -->
 
@@ -175,4 +175,3 @@ ranbu(
 #> 4   -5.88 -4.45   -4.42
 #> 5    1.80  4.24    4.24
 ```
-"# dirf" 
