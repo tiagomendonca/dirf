@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 
 
 
-# dirf - Distances with Random Forest <a href="https://github.com/tiagomendonca/dirf"><img src="man/figures/hex-dirf01.png" align="right" height="175" /></a>
+# dirf - Distances with Random Forest <a href="https://github.com/tiagomendonca/dirf"><img src="hex-dirf01.png" align="right" height="175" /></a>
 
 
 
@@ -33,6 +33,9 @@ knitr::opts_chunk$set(
 The implementation builds on forests fitted with the `ranger` package: once a shallow forest is trained, predictions are obtained without retraining by weighting training responses according to the kernelized distances. This supports **conditional expectation (distance-weighted mean) for point prediction** and extends naturally to **quantile regression via a weighted empirical CDF** to estimate conditional quantiles.
 
 
+## Reference
+
+Santos, T.M., Izbicki, R. and Esteves, L.G. (2025) DiNo and RanBu: Lightweight Predictions from Shallow Random Forests. arXiv preprint arXiv:2510.23624. Available at: https://arxiv.org/abs/2510.23624 (Accessed: 29 October 2025).
 
 ## Installation
 
