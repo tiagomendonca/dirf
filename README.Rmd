@@ -14,10 +14,7 @@ knitr::opts_chunk$set(
 ```
 
 
-
-# dirf - Distances with Random Forest <a href="https://github.com/tiagomendonca/dirf"><img src="hex-dirf01.png" align="right" height="175" /></a>
-
-
+# dirf - Distances with Random Forest <a href="https://github.com/tiagomendonca/dirf"><img src="https://cdn.jsdelivr.net/gh/tiagomendonca/dirf@main/man/figures/hex-dirf01.png" align="right" height="175" /></a>
 
 
 ```{r, echo = FALSE, out.width="175px"}

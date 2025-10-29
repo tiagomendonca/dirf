@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# dirf - Distances with Random Forest <a href="https://github.com/tiagomendonca/dirf"><img src="man/figures/hex-dirf01.png" align="right" height="175" /></a>
+# dirf - Distances with Random Forest <a href="https://github.com/tiagomendonca/dirf"><img src="https://cdn.jsdelivr.net/gh/tiagomendonca/dirf@main/man/figures/hex-dirf01.png" align="right" height="175" /></a>
 
 <!-- badges: start -->
 
